@@ -1,0 +1,1180 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[left=2.6cm,right=2.6cm,top=2.55cm,bottom=2.1cm,
+  headheight=14pt,headsep=20pt,footskip=25pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array,enumitem}
+\usepackage{fancyhdr,microtype}
+\usepackage{xurl}
+\usepackage[hidelinks,hypertexnames=false]{hyperref}
+\hypersetup{
+  pdftitle={A candidate proof of the Gatzweiler-Krattenthaler positivity conjecture},
+  pdfauthor={Justin Du},
+  pdfsubject={Preprint, version 1; mixed sumsets and the complete parameter range},
+  pdfkeywords={Gaussian binomial coefficients, positivity, numerical semigroups,
+    Kneser theorem, Hilbert series}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus 1pt minus 1pt}
+\setlength{\emergencystretch}{1.5em}
+\setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=4pt}
+\setlist[itemize]{leftmargin=*,itemsep=3pt,topsep=4pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Gatzweiler--Krattenthaler positivity conjecture}
+\fancyhead[R]{\small Justin Du -- Preprint v1}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Nzero}{\mathbb Z_{\ge 0}}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\C}{\mathbb C}
+\newcommand{\sg}[1]{\left\langle #1\right\rangle}
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\newcommand{\qbinom}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}_{q}}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Hilb}{Hilb}
+\newcommand{\Dcond}{\textup{(D)}}
+\newcommand{\Hcond}{\textup{(H)}}
+\newcommand{\interval}[2]{[#1,#2]_{\Z}}
+\newcommand{\code}[1]{\texttt{\small #1}}
+
+\begin{document}
+\begin{center}
+  {\fontsize{24}{29}\selectfont\bfseries A candidate proof of the\\[4pt]
+  Gatzweiler--Krattenthaler\\[4pt]
+  positivity conjecture\par}
+  \vspace{10pt}
+  {\large Justin Du\par}
+  \vspace{5pt}
+  \href{mailto:fbphdu@gmail.com}{\texttt{fbphdu@gmail.com}}\par
+  \vspace{10pt}
+  Preprint, version 1 \quad$\vert$\quad 11 November 2026
+\end{center}
+\vspace{5pt}
+
+\begin{abstract}
+Gatzweiler and Krattenthaler conjectured that a polynomial quotient of two
+Gaussian binomial coefficients with the same upper index has nonnegative
+coefficients. We present a candidate proof for the complete parameter range.
+After cancellation, polynomiality gives divisibility-count inequalities for
+two separated integer intervals of equal length. We prove that every subset
+of the lower interval generates at least as many elements of the upper
+interval in its additive semigroup. The criterion of Gatzweiler,
+Levic\'an-Santib\'a\~nez and Yoshida then supplies a regular sequence whose
+Hilbert series is the required quotient. The central lemma uses a mixed
+sumset modulo the largest generator not exceeding the interval length.
+Kneser's theorem, together with separate capacities for the lower and upper
+generators, handles all stabilizers and all collisions of residues.
+Two-generator representations treat subsets near the upper endpoint.
+A second sumset estimate handles small lower indices, and a necessary
+inequality from polynomiality leaves only two explicit boundary families.
+The proof has no finite parameter cutoff; exact computations are supplied
+as supplementary checks.
+\end{abstract}
+
+{\small\itshape Preprint; not externally peer reviewed.
+AI use and verification are described in the appendix.}
+
+\section*{Introduction and proof strategy}
+
+The Gaussian binomial coefficient is a polynomial with nonnegative integer
+coefficients, but quotients of such polynomials need not preserve
+coefficientwise nonnegativity. Gatzweiler and Krattenthaler~\cite{GK}
+proposed that polynomiality is sufficient when the two Gaussian binomial
+coefficients have the same upper index. Their paper treats the cases
+$l=0,1,2$ and $k-l=0,1,2,3$, and reports exact verification for $n\le 400$.
+Gatzweiler, Levic\'an-Santib\'a\~nez and Yoshida~\cite{GLY} subsequently
+established a sufficient condition using regular sequences in weighted
+polynomial rings. In the normalized range $1\le l<k\le n/2$, their
+Corollary~1.7 proves the conjecture when
+\[
+  2k\floor{\frac{k-1}{2}}+k-l<n,
+\]
+and hence when $n\ge k^2$.
+
+The present argument uses the semigroup criterion of~\cite{GLY} directly.
+It establishes that criterion throughout the normalized parameter range.
+Besides the regular-sequence criterion and its Hilbert-series consequence,
+the only external theorem used is Kneser's addition theorem, in the form
+recorded by DeVos~\cite{DeVos}. All representation estimates and all
+parameter reductions needed below are proved in the manuscript.
+
+\textbf{Proof strategy.}
+Write $d=k-l$, and cancel the factorials in the Gaussian binomial quotient.
+The numerator exponents form an interval $A$ of length $d$ lying above the
+denominator interval $B=\interval{l+1}{k}$. Polynomiality says that $A$
+contains at least as many multiples of every positive integer as $B$ does.
+The task is to show
+\[
+  |A\cap\sg{I}|\ge |I|
+  \qquad(\varnothing\ne I\subseteq B),
+\]
+where $\sg{I}$ is the additive semigroup generated by $I$.
+
+If $I$ has a generator at most $d$, a mixed sumset yields the desired
+inequality. Its two summands record all generators and the generators at
+most $d$, respectively. Keeping these two capacities separate is what
+allows the periodic and noninjective residue cases to be counted correctly.
+If all generators exceed $d$, collisions of direct multiples can instead
+be converted into many two-generator representations when $k\ge3l-1$.
+A further sumset argument covers $l\le3(\floor{n/k}-1)$. Polynomiality
+forces the remaining parameters onto two boundary families, where direct
+injections finish the proof.
+
+\textbf{Reading guide.}
+Section~\ref{sec:setup} states the results and the interval reduction.
+Section~\ref{sec:tools} records the external inputs and an elementary
+two-generator bound. Sections~\ref{sec:mixed} and~\ref{sec:tail} prove the
+mixed-sumset and upper-endpoint lemmas.
+Sections~\ref{sec:three} and~\ref{sec:small} establish the small-index
+criterion. Sections~\ref{sec:layers} and~\ref{sec:boundary} identify and
+settle the boundary families, and Section~\ref{sec:completion} completes
+both the semigroup statement and the original conjecture.
+
+\section{Main results and the interval reduction}\label{sec:setup}
+
+For nonnegative integers $n$ and $0\le j\le n$, put
+\begin{equation}\label{eq:qbinom}
+  [n]_q!=\prod_{i=1}^{n}\frac{1-q^i}{1-q},
+  \qquad [0]_q!=1,
+  \qquad
+  \qbinom{n}{j}=\frac{[n]_q!}{[j]_q!\,[n-j]_q!}.
+\end{equation}
+All polynomials and rational functions below have the indeterminate $q$.
+The notation $\Nzero[q]$ denotes polynomials with nonnegative integer
+coefficients.
+
+\begin{theorem}[The proposed positivity theorem]\label{thm:main}
+Let $n,k,l$ be integers with $0\le k,l\le n$. If
+\begin{equation}\label{eq:mainquotient}
+  \frac{\qbinom{n}{k}}{\qbinom{n}{l}}
+\end{equation}
+is a polynomial in $q$, then it belongs to $\Nzero[q]$.
+\end{theorem}
+
+We will prove a stronger semigroup assertion. For integers $u,v$, write
+$\interval{u}{v}=\{x\in\Z:u\le x\le v\}$; this set is empty when $u>v$.
+For a finite nonempty set $I$ of positive integers, define
+\begin{equation}\label{eq:semigroup}
+  \sg{I}=\left\{\sum_{b\in I} t_b b:t_b\in\Nzero\right\}.
+\end{equation}
+In particular, $0\in\sg{I}$.
+
+\begin{theorem}[Interval semigroup condition]\label{thm:hitting}
+Let $0\le l<k\le n/2$, and put
+\begin{equation}\label{eq:intervals}
+  d=k-l,\qquad N=n-k+1,\qquad U=n-l,\qquad
+  A=\interval{N}{U},\qquad B=\interval{l+1}{k}.
+\end{equation}
+Suppose that, for every positive integer $s$,
+\begin{equation}\tag{D}\label{eq:D}
+  C_A(s):=|A\cap s\Z|\ \ge\ C_B(s):=|B\cap s\Z|.
+\end{equation}
+Then, for every nonempty subset $I\subseteq B$,
+\begin{equation}\tag{H}\label{eq:H}
+  |A\cap\sg{I}|\ge |I|.
+\end{equation}
+\end{theorem}
+
+The two intervals in~\eqref{eq:intervals} have the same cardinality $d$,
+and $N>k$. Factorial cancellation gives
+\begin{equation}\label{eq:cancel}
+  P_{n,k,l}(q):=
+  \frac{\qbinom{n}{k}}{\qbinom{n}{l}}
+  =\frac{\prod_{a\in A}(1-q^a)}
+         {\prod_{b\in B}(1-q^b)}.
+\end{equation}
+For $s\ge2$, the exponent of the cyclotomic polynomial $\Phi_s(q)$ in
+this rational function is $C_A(s)-C_B(s)$. The factors with $s=1$
+cancel because $|A|=|B|$. Consequently
+\begin{equation}\label{eq:polynomialcriterion}
+  P_{n,k,l}(q)\text{ is a polynomial}
+  \quad\Longleftrightarrow\quad \Dcond.
+\end{equation}
+This also shows that a polynomial quotient automatically lies in
+$\Z[q]$: it is a product of cyclotomic polynomials with nonnegative
+integer exponents. Thus the phrase \emph{is a polynomial} in
+Theorem~\ref{thm:main} does not require an additional integrality
+assumption.
+
+For later use, the counts are
+\begin{equation}\label{eq:counts}
+  C_A(s)=\floor{\frac{U}{s}}-\floor{\frac{N-1}{s}},
+  \qquad
+  C_B(s)=\floor{\frac{k}{s}}-\floor{\frac{l}{s}}.
+\end{equation}
+In particular, \Dcond\ implies that every $b\in B$ has a positive
+multiple in $A$.
+
+To reduce Theorem~\ref{thm:main} to the normalized range, use
+$\qbinom{n}{j}=\qbinom{n}{n-j}$ to move both lower indices into
+$\interval{0}{\floor{n/2}}$. Equal indices give the quotient $1$.
+The degree $j(n-j)$ is strictly increasing on these integer indices.
+If the numerator has the smaller lower index, the rational function has
+negative degree and therefore cannot be a nonzero polynomial. All
+remaining nontrivial cases have $0\le l<k\le n/2$.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning in the normalized range}\\
+\midrule
+$d=k-l$ & Common number of numerator and denominator exponents\\
+$A=\interval{N}{U}$ & Numerator exponents, with $N>k$ and $U-N+1=d$\\
+$B=\interval{l+1}{k}$ & Denominator exponents\\
+$I$ & An arbitrary nonempty subset of $B$\\
+$\sg{I}$ & Nonnegative integer combinations of the elements of $I$\\
+$t=\floor{n/k}$ & The layer parameter, always at least $2$\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Semigroup, sumset, and representation tools}\label{sec:tools}
+
+\subsection{The regular-sequence criterion}
+
+We use the following consequence of Propositions~3.3 and~3.6
+of Gatzweiler, Levic\'an-Santib\'a\~nez and Yoshida~\cite{GLY}.
+
+\begin{theorem}[Semigroup criterion]\label{thm:GLY}
+Let $A$ and $B$ be finite sets of positive integers with $|A|=|B|$.
+If $|A\cap\sg{I}|\ge|I|$ for every nonempty $I\subseteq B$, then
+\[
+  \frac{\prod_{a\in A}(1-q^a)}{\prod_{b\in B}(1-q^b)}
+  \in\Nzero[q].
+\]
+More precisely, in the weighted polynomial ring
+$R=\C[x_b:b\in B]$, with $\deg x_b=b$, there is a homogeneous regular
+sequence $(f_a)_{a\in A}$ with $\deg f_a=a$, and the displayed quotient
+is $\Hilb(R/(f_a:a\in A);q)$.
+\end{theorem}
+
+The coefficient of $q^j$ in this Hilbert series is the dimension of
+the degree-$j$ component of the quotient ring. Equal numbers of variables
+and regular-sequence elements make that quotient finite dimensional.
+This explains both nonnegativity and polynomiality in the conclusion.
+Theorem~\ref{thm:hitting}, together with this criterion and
+\eqref{eq:polynomialcriterion}, will imply Theorem~\ref{thm:main}.
+
+\subsection{Kneser's theorem and cyclic stabilizers}
+
+For subsets $S,T$ of an abelian group, write
+$S+T=\{s+t:s\in S,\ t\in T\}$, and let
+$pS=S+\cdots+S$ denote the $p$-fold sumset. The stabilizer of a set $Q$
+is $\Stab(Q)=\{h:Q+h=Q\}$.
+
+\begin{theorem}[Kneser]\label{thm:kneser}
+Let $S,T$ be nonempty finite subsets of an abelian group, and let
+$H=\Stab(S+T)$. Then
+\begin{equation}\label{eq:kneser}
+  |S+T|\ge |S+H|+|T+H|-|H|.
+\end{equation}
+\end{theorem}
+
+See~\cite[Theorem~1]{DeVos}. If $S,T,S+T$ occupy respectively $z,w,v$
+cosets of $H$, then $S+T$ is a union of full $H$-cosets and
+\begin{equation}\label{eq:knesercosets}
+  v\ge z+w-1.
+\end{equation}
+We will also use
+\begin{equation}\label{eq:kneseriterated}
+  |pS|\ge p|S+H|-(p-1)|H|,
+  \qquad H=\Stab(pS).
+\end{equation}
+To justify this form, pass to the quotient by $H$.
+The image of $pS$ has trivial stabilizer. The stabilizer of every
+intermediate sumset $jS$ in the quotient is contained in that of $pS$,
+because adding $(p-j)S$ preserves every period of $jS$.
+Thus each intermediate sumset is aperiodic. Applying
+\eqref{eq:kneser} successively in the quotient gives
+$|p\overline S|\ge p|\overline S|-(p-1)$, which lifts to
+\eqref{eq:kneseriterated}.
+
+Every subgroup of $\Z/m\Z$ has the form
+\begin{equation}\label{eq:cyclicsubgroup}
+  H=\{0,g,2g,\ldots,m-g\},\qquad g\mid m.
+\end{equation}
+Its order is $h=m/g$, and its cosets are indexed by residues modulo $g$.
+A set stabilized by $H$ therefore contains every residue modulo $m$
+lying in any of the modulo-$g$ classes it occupies.
+
+\subsection{An elementary two-generator bound}
+
+\begin{lemma}\label{lem:frobenius}
+Let $a,b$ be distinct positive integers. Put
+$g=\gcd(a,b)$, $L=ab/g$, and $F=L-a-b$.
+Every nonnegative multiple of $g$ strictly greater than $F$ belongs
+to $\sg{a,b}$.
+\end{lemma}
+
+\begin{proof}
+Write $a=ug$ and $b=vg$, with $\gcd(u,v)=1$.
+For an integer $w>uv-u-v$, choose
+$j\in\{0,1,\ldots,u-1\}$ such that $jv\equiv w\pmod u$.
+Then
+\[
+  w-jv>uv-u-v-(u-1)v=-u.
+\]
+Since $w-jv$ is a multiple of $u$, it is nonnegative.
+Hence $w=(w-jv)+jv\in\sg{u,v}$.
+Scaling by $g$ proves the assertion.
+\end{proof}
+
+
+
+\section{The mixed-sumset lemma}\label{sec:mixed}
+
+Throughout this section, $A$ and $B$ are as in
+\eqref{eq:intervals}, with $N>k$ and \Dcond.
+The following lemma treats every subset containing a generator no
+larger than the common interval length.
+
+\begin{lemma}[Mixed sumsets]\label{lem:mixed}
+If $\varnothing\ne I\subseteq B$ and $I\cap\interval{1}{d}\ne\varnothing$,
+then $|A\cap\sg{I}|\ge|I|$.
+\end{lemma}
+
+\begin{proof}
+Define
+\begin{equation}\label{eq:mixedlow}
+  I_{\mathrm{low}}=I\cap\interval{1}{d},\qquad
+  m=\max I_{\mathrm{low}},\qquad M=\max I.
+\end{equation}
+Then $l<m\le d$, and
+\begin{equation}\label{eq:mixedranges}
+  I_{\mathrm{low}}\subseteq\interval{l+1}{m},
+  \qquad
+  I\setminus I_{\mathrm{low}}\subseteq\interval{d+1}{k}.
+\end{equation}
+The second interval has length $l$. There are no elements of $I$ in
+$\interval{m+1}{d}$; this uses the maximal choice of $m$.
+
+\textbf{Residues and their lifts.}
+In $\Z/m\Z$, put
+\begin{equation}\label{eq:mixedsumset}
+  S=I\bmod m,\qquad T=I_{\mathrm{low}}\bmod m,\qquad Q=S+T.
+\end{equation}
+Both $S$ and $T$ contain $0$, since $m\in I_{\mathrm{low}}$.
+Suppose $y\in A$ and $y\bmod m\in Q$.
+Represent its residue as a sum of one residue from $S$ and one from $T$.
+For a nonzero residue choose a corresponding generator, and for a zero
+residue choose the empty sum. The resulting integer $z$ belongs to
+$\sg{I}$ and satisfies
+\begin{equation}\label{eq:mixedlift}
+  0\le z\le M+m,\qquad z\equiv y\pmod m.
+\end{equation}
+If $z>y$, the congruence would give
+$z\ge y+m\ge N+m>M+m$, a contradiction.
+Therefore $y=z+jm$ for some $j\ge0$, and $y\in\sg{I}$.
+It suffices to count the elements of $A$ whose residues lie in $Q$.
+
+\textbf{Capacities of occupied cosets.}
+Let $H=\Stab(Q)$, write it as in~\eqref{eq:cyclicsubgroup}, and put
+$h=m/g$. Let $S,T,Q$ occupy respectively $z,w,v$ cosets of $H$.
+These are the occupied classes modulo $g$, and Kneser's theorem gives
+\begin{equation}\label{eq:mixedkneser}
+  v\ge z+w-1.
+\end{equation}
+Set
+\begin{equation}\label{eq:alphabeta}
+  \alpha=\floor{\frac{l}{g}},\qquad
+  \beta=\ceil{\frac{l}{g}}.
+\end{equation}
+Since $l<m=gh$, we have $0\le\alpha\le\beta\le h$.
+
+Count the elements of $I$ by their classes modulo $g$.
+The zero class contains at most $C_B(g)$ elements of $I$ in total.
+This count includes both parts of~\eqref{eq:mixedranges}.
+In each nonzero class, $\interval{l+1}{m}$ contains at most
+$h-\alpha$ elements, since
+\[
+  \ceil{\frac{m-l}{g}}=h-\floor{\frac{l}{g}}.
+\]
+There are at most $w-1$ nonzero classes occupied by the low generators.
+The high interval $\interval{d+1}{k}$ has length $l$ and contains
+at most $\beta$ elements in any class; at most $z-1$ nonzero classes
+are relevant for its elements. Hence
+\begin{equation}\label{eq:mixedupper}
+  |I|\le C_B(g)+(w-1)(h-\alpha)+(z-1)\beta.
+\end{equation}
+
+On the other hand, $0\in Q$ and $Q$ is $H$-periodic, so the entire
+zero coset $H$ is contained in $Q$. In $A$ this coset contributes
+$C_A(g)\ge C_B(g)$ elements by \Dcond.
+Each other occupied coset contributes at least
+$\floor{d/g}\ge h$ elements, because $d\ge m=gh$.
+All of these elements are representable by~\eqref{eq:mixedlift}.
+Consequently
+\begin{equation}\label{eq:mixedlower}
+  |A\cap\sg{I}|
+  \ge C_B(g)+(v-1)h
+  \ge C_B(g)+(z+w-2)h.
+\end{equation}
+The last lower bound minus the upper bound in~\eqref{eq:mixedupper}
+equals
+\begin{equation}\label{eq:mixeddifference}
+  (z-1)(h-\beta)+(w-1)\alpha\ge0.
+\end{equation}
+This proves the lemma.
+\end{proof}
+
+\begin{remark}\label{rem:mixedlocal}
+The proof does not require the map $I\longrightarrow\Z/m\Z$ to be
+injective. It counts original generators through their interval capacities,
+while Kneser's theorem counts occupied cosets. It also allows a nontrivial
+stabilizer. In fact, after the stabilizer modulus $g$ has been determined,
+the proof uses \Dcond\ only for that one modulus.
+\end{remark}
+
+\section{Subsets near the upper endpoint}\label{sec:tail}
+
+We next handle subsets having no generator at most $d$, provided that
+$k\ge3l-1$. This lemma needs only the existence of a direct multiple
+for each generator.
+
+\begin{lemma}[Upper-endpoint subsets]\label{lem:tail}
+Let $l\ge1$, $k\ge3l-1$, and $d=k-l$.
+Let $A=\interval{N}{U}$ have length $d$, with $N>k$.
+Suppose $\varnothing\ne I\subseteq\interval{d+1}{k}$ and every $b\in I$
+has a multiple in $A$. Then $|A\cap\sg{I}|\ge|I|$.
+\end{lemma}
+
+\begin{proof}
+Let $D_I$ be the union, over $b\in I$, of the multiples of $b$ in $A$.
+If $|D_I|\ge|I|$, the conclusion is immediate.
+Otherwise, since every generator has at least one such multiple, two
+distinct generators $a<b$ have a common multiple $x\in A$.
+Put
+\begin{equation}\label{eq:tailparameters}
+  g=\gcd(a,b),\quad a=ug,\quad b=vg,\quad
+  J=\floor{\frac{k}{g}},\quad
+  L=\frac{ab}{g},\quad F=L-a-b.
+\end{equation}
+Since $x$ is a positive common multiple, $U\ge x\ge L$.
+
+The interval $\interval{d+1}{k}$ has length $l$. Thus
+$g\le b-a\le l-1$, and
+\[
+  d=k-l\ge2l-1\ge l+g.
+\]
+It follows that
+\begin{equation}\label{eq:tailwidth}
+  \floor{\frac{d}{g}}\ge\ceil{\frac{l}{g}}.
+\end{equation}
+For example, to see the floor-ceiling step, use
+$d/g\ge l/g+1$ and
+$\floor{l/g}+1\ge\ceil{l/g}$.
+The collision case is impossible for $l=1$, so all the expressions
+above are consistent with $g\ge1$.
+
+Also $d\ge k/2$, so $u,v>k/(2g)\ge J/2$.
+The distinct integers $u<v$ therefore satisfy
+\begin{equation}\label{eq:tailsum}
+  u+v\ge J+2.
+\end{equation}
+Indeed, if $J=2j$, their sum is at least $2j+3$; if $J=2j+1$,
+it is at least $2j+3$.
+
+Fix a residue class modulo $g$ occupied by $I$.
+Let $c$ be the smallest generator in this class, and let $r_c$ be its
+number of generators. We have both
+\begin{equation}\label{eq:tailrc}
+  r_c\le\ceil{\frac{l}{g}},
+  \qquad
+  r_c\le\floor{\frac{k-c}{g}}+1.
+\end{equation}
+We will produce $r_c$ points $y\in A$ satisfying
+$y\equiv c\pmod g$ and $y>F+c$.
+Since $y>k\ge c$, the difference $y-c$ is nonnegative.
+Lemma~\ref{lem:frobenius} then gives
+\[
+  y\in c+\sg{a,b}\subseteq\sg{I}.
+\]
+
+Define
+\begin{equation}\label{eq:tailcapacities}
+  \begin{split}
+  C_c&=\floor{\frac{U-c}{g}}-\floor{\frac{N-1-c}{g}},\\
+  Q_c&=\floor{\frac{U-c}{g}}-\frac{F}{g}.
+  \end{split}
+\end{equation}
+Because $F/g$ is an integer, the exact number of selected points is
+\begin{equation}\label{eq:tailmin}
+  \max\{0,\min(C_c,Q_c)\}.
+\end{equation}
+For completeness, put
+$j_{\max}=\floor{(U-c)/g}$ and
+$j_{\min}=\floor{(N-1-c)/g}+1$.
+The points in $A$ in this residue class are $c+jg$ for
+$j_{\min}\le j\le j_{\max}$.
+The threshold $y>F+c$ imposes $j\ge F/g+1$.
+Thus their number is
+$\max\{0,j_{\max}-\max(j_{\min},F/g+1)+1\}$,
+which is exactly~\eqref{eq:tailmin}.
+
+Every residue class has at least $\floor{d/g}$ points in an interval
+of length $d$. Equations~\eqref{eq:tailwidth} and~\eqref{eq:tailrc}
+give $C_c\ge r_c$.
+Using $U\ge L$ and~\eqref{eq:tailsum}, we also obtain
+\begin{equation}\label{eq:tailQbound}
+  \begin{split}
+  Q_c
+  &\ge u+v-\ceil{\frac{c}{g}}\\
+  &\ge J+2-\ceil{\frac{c}{g}}\\
+  &\ge \floor{\frac{k-c}{g}}+1
+   \ge r_c.
+  \end{split}
+\end{equation}
+The penultimate inequality follows from
+\[
+  \ceil{\frac{c}{g}}+\floor{\frac{k-c}{g}}\le J+1.
+\]
+One can verify this by writing $c/g$ as its integer and fractional
+parts and using $\floor{k/g}=J$.
+Hence~\eqref{eq:tailmin} is at least $r_c$.
+Summing over the occupied residue classes proves the lemma, since those
+classes are disjoint.
+\end{proof}
+
+\begin{corollary}\label{cor:tailrange}
+Under the hypotheses of Theorem~\ref{thm:hitting}, if $k\ge3l-1$,
+then \Hcond\ holds for every nonempty $I\subseteq B$.
+\end{corollary}
+
+\begin{proof}
+If $I$ has an element at most $d$, apply Lemma~\ref{lem:mixed}.
+Otherwise $I\subseteq\interval{d+1}{k}$.
+If $l=0$, this latter case is empty; if $l\ge1$, \Dcond\ supplies the
+direct multiples required by Lemma~\ref{lem:tail}.
+\end{proof}
+
+\begin{remark}
+The modulus $g$ in Lemma~\ref{lem:tail} is the greatest common divisor
+of one collision pair. No divisibility by $g$ is required of the other
+generators. Each occupied class is treated through its own translate
+$c+\sg{a,b}$, and~\eqref{eq:tailmin} keeps the left endpoint $N$
+in the count.
+\end{remark}
+
+\section{At most three generators}\label{sec:three}
+
+This section proves a small-cardinality statement for a more general
+pair of positive integer intervals. It will supply the initial cases
+of the iterated-sumset argument.
+
+\begin{lemma}\label{lem:three}
+Let $A,B$ be nonempty finite intervals of positive integers, with
+$\min A>\max B$ and $|A|\ge|B|$.
+Assume $|A\cap s\Z|\ge|B\cap s\Z|$ for every positive integer $s$.
+Then $|A\cap\sg{I}|\ge|I|$ for every $I\subseteq B$ with
+$1\le|I|\le3$.
+\end{lemma}
+
+\begin{proof}
+\textbf{One or two generators.}
+For $I=\{b\}$, the multiple-count inequality with $s=b$ gives a
+representable point in $A$.
+For $I=\{a,b\}$, consider the union of their direct multiples in $A$.
+If it has at least two elements, there is nothing to prove.
+Otherwise both generators have the same unique direct multiple $x\in A$.
+Let $g=\gcd(a,b)$ and $L=ab/g$.
+The interval $B$ has at least two multiples of $g$, so $A$ does as well.
+Since the multiples of $g$ in an interval are consecutive along the
+$g$-lattice, at least one of $x-g$ and $x+g$ lies in $A$.
+That point is positive and at least
+\[
+  x-g\ge L-g>L-a-b.
+\]
+It is representable by Lemma~\ref{lem:frobenius}, and is distinct
+from $x$.
+
+\textbf{Reduction for three generators.}
+Let $|I|=3$, and first divide by the overall greatest common divisor
+$h=\gcd(I)$.
+The sets
+\[
+  A_h=(A\cap h\Z)/h,\qquad B_h=(B\cap h\Z)/h
+\]
+are separated intervals of positive integers. They are nonempty,
+$|A_h|\ge|B_h|$, and their multiple counts for $s$ are the original
+counts for $hs$.
+Also $I/h\subseteq B_h$ has three elements.
+Any three representable points of $A_h$ scale back to three such points
+of $A$. We may therefore assume $\gcd(I)=1$.
+
+If the union of all direct multiples has at least three points,
+we are done. Otherwise there is a collision pair $a<b$ in $I$ with
+a common multiple $x\in A$; write $c$ for the third generator, and put
+\[
+  g=\gcd(a,b),\qquad L=ab/g,\qquad F=L-a-b.
+\]
+If $A$ contains at least three multiples of $g$, choose three
+consecutive such multiples containing $x$.
+Their smallest is at least $x-2g\ge L-2g>F$, since $a+b>2g$.
+All three are representable by Lemma~\ref{lem:frobenius}.
+
+It remains that $A$ contains exactly two multiples of $g$.
+The multiple-count inequality forces $B$ to contain exactly two as well.
+Consequently, for some integer $v\ge1$,
+\begin{equation}\label{eq:threeconsecutive}
+  a=vg,\qquad b=(v+1)g,\qquad c<(v+2)g.
+\end{equation}
+The first two expressions follow because two multiples in an interval
+with no third must be consecutive. The last inequality holds because
+$B$ does not contain the next multiple $(v+2)g$.
+Since $\gcd(a,b,c)=1$, we have $g>1$ and $c\not\equiv0\pmod g$.
+Indeed, $g=1$ would make all three elements of $I$ multiples of $g$.
+We also have
+\begin{equation}\label{eq:threelength}
+  |A|\ge|B|\ge g+1,\qquad
+  \min A>x-2g\ge L-2g.
+\end{equation}
+The last strict inequality holds because $x-2g$ in $A$ would give
+three multiples of $g$.
+The two multiples of $g$ in $A$ are themselves representable:
+they are at least $x-g\ge L-g>F$.
+We seek one further point in the nonzero residue class of $c$.
+
+\textbf{The remaining cases.}
+If $v=1$, then $a=g$.
+By~\eqref{eq:threelength}, $A$ contains a point congruent to $c$
+modulo $g$; since that point exceeds $c$, it belongs to
+$c+\sg{g}$.
+
+If $v\ge3$, then~\eqref{eq:threeconsecutive} gives
+\[
+  F+c<L-(v-1)g\le L-2g<\min A.
+\]
+Every point of $A$ in the residue class of $c$ therefore belongs to
+$c+\sg{a,b}$. At least one exists by~\eqref{eq:threelength}.
+
+Suppose now $v=2$. Then $a=2g$, $b=3g$, $L=6g$, and $F=g$.
+If $c\le3g$, we have $F+c\le4g<\min A$, and the same argument
+applies.
+If $c>3g$, write $c=3g+s$ with $1\le s<g$, and $x=6jg$
+with $j\ge1$. Both integers
+\begin{equation}\label{eq:threewitnesses}
+  \begin{split}
+  y&=x-g+s=c+2g(3j-2),\\
+  z&=x+s=c+3g(2j-1)
+  \end{split}
+\end{equation}
+belong to $\sg{I}$ and have the nonzero residue of $c$.
+They satisfy $y<x<z$ and $z-y=g$.
+An integer interval containing $x$ and avoiding both $y$ and $z$
+would be contained in $\interval{y+1}{z-1}$ and have length at most
+$g-1$. This contradicts $|A|\ge g+1$.
+Thus at least one of $y,z$ belongs to $A$ and supplies the third
+representable point. All cases are complete.
+\end{proof}
+
+\section{The small-index criterion}\label{sec:small}
+
+\begin{lemma}\label{lem:small}
+Under the hypotheses of Theorem~\ref{thm:hitting}, let
+$t=\floor{n/k}\ge2$. If $l\le3(t-1)$, then \Hcond\ holds for every
+nonempty $I\subseteq B$.
+\end{lemma}
+
+\begin{proof}
+If $|I|\le3$, apply Lemma~\ref{lem:three}.
+Henceforth put $r=|I|\ge4$ and $m=\max I$.
+If $m\le d$, move each generator $b\in I$ forward by a nonnegative
+multiple of $m$ into the interval $\interval{N}{N+m-1}$.
+The resulting points are representable and distinct: different
+elements of $\interval{1}{m}$ have different residues modulo $m$.
+Since $m\le d$, the whole target interval lies in $A$.
+
+We may therefore suppose $m>d$. Put
+\[
+  e=m-d\le l,\qquad
+  S=I\bmod m,\qquad W=A\bmod m.
+\]
+Then $|S|=r$, $|W|=d$, and $0\in S$.
+The equalities of cardinalities use $I\subseteq\interval{1}{m}$
+and $d<m$, respectively.
+
+\textbf{Lifting the iterated sumset.}
+Since $n\ge tk$,
+\begin{equation}\label{eq:smallN}
+  N=n-k+1>(t-1)k\ge(t-1)m.
+\end{equation}
+If $y\in A$ and $y\bmod m\in tS$, choose at most $t$ generators
+representing its summands, using the empty sum for a zero residue.
+Every chosen nonzero generator is less than $m$, so their sum $z$
+satisfies $0\le z<tm$.
+If $z>y$, congruence modulo $m$ and~\eqref{eq:smallN} would give
+$z\ge y+m>tm$, a contradiction.
+Thus $y=z+jm\in\sg{I}$ for some $j\ge0$.
+It remains to show $|W\cap tS|\ge r$.
+
+\textbf{Counting with the stabilizer.}
+Write $H=\Stab(tS)$ in the form~\eqref{eq:cyclicsubgroup}, and put
+$h=m/g$. Let $S$ and $tS$ occupy $z$ and $w$ cosets of $H$.
+By~\eqref{eq:kneseriterated},
+\begin{equation}\label{eq:smallkneser}
+  w\ge tz-(t-1)\ge2z-1.
+\end{equation}
+Define
+\[
+  v=h-\floor{\frac{l}{g}}.
+\]
+Because $l<m=gh$, we have $v\ge1$.
+The interval $\interval{l+1}{m}$ contains at most $v$ integers
+in each class modulo $g$, so
+\begin{equation}\label{eq:smallcapacity}
+  r\le zv.
+\end{equation}
+Every coset contains at least $v-1$ elements of $W$.
+Indeed, $d\ge m-l$ implies
+\[
+  \floor{\frac{d}{g}}
+  \ge h-\ceil{\frac{l}{g}}
+  \ge v-1.
+\]
+For the zero coset, \Dcond\ gives the stronger bound
+\begin{equation}\label{eq:smallzero}
+  |W\cap H|=C_A(g)\ge C_B(g)
+  =\floor{\frac{k}{g}}-\floor{\frac{l}{g}}\ge v,
+\end{equation}
+since $k\ge m$.
+The equality $|W\cap H|=C_A(g)$ uses the injectivity of reduction
+of $A$ modulo $m$.
+
+If $v\ge2$, then $0\in tS$ implies $H\subseteq tS$.
+Using~\eqref{eq:smallkneser} and~\eqref{eq:smallzero}, we get
+\begin{equation}\label{eq:smallvlarge}
+  |W\cap tS|
+  \ge v+(2z-2)(v-1)
+  =zv+(z-1)(v-2)\ge r.
+\end{equation}
+
+Suppose $v=1$. Each occupied coset of $S$ now contains exactly one
+element of $S$, so $z=r$.
+If $d\ge g$, every coset has at least one element of $W$; hence
+$|W\cap tS|\ge w\ge r$.
+If $d<g$, the interval $A$ occupies $d$ distinct classes modulo $g$.
+There are $g$ such classes in total, and $tS$ occupies $w$ of them.
+Therefore
+\begin{equation}\label{eq:smallvone}
+  |W\cap tS|\ge d+w-g
+  \ge tr-(t-1)-(g-d).
+\end{equation}
+Finally,
+\[
+  (t-1)(r-1)\ge3(t-1)\ge l\ge m-d\ge g-d,
+\]
+where we used $r\ge4$, the hypothesis on $l$, and $m\le k$.
+Thus the last expression in~\eqref{eq:smallvone} is at least $r$.
+This proves the lemma.
+\end{proof}
+
+\section{Layer restrictions forced by polynomiality}\label{sec:layers}
+
+The next proposition uses only the multiple-count condition.
+It is the parameter reduction that makes the preceding two ranges
+sufficient, up to two explicit boundary families.
+
+\begin{proposition}\label{prop:layers}
+Under the hypotheses of Theorem~\ref{thm:hitting}, suppose $d\ge2$
+and put $t=\floor{n/k}\ge2$. Then
+\begin{equation}\label{eq:layerk}
+  k\ge(t+1)(l-t+1),
+\end{equation}
+and
+\begin{equation}\label{eq:layern}
+  tk+l\le n\le
+  \min\{(t+1)k-1,\ (t+1)k-tl+t^2-1\}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The definition of $t$ gives
+\[
+  (t-1)k<N\le tk,\qquad U<(t+1)k.
+\]
+Since $k\in B$, condition \Dcond\ forces a multiple of $k$ in $A$.
+The only possible one is $tk$, so $tk\in A$.
+As $A$ has length $d$,
+\begin{equation}\label{eq:layerNlower}
+  N\ge tk-d+1.
+\end{equation}
+
+Now take
+\[
+  b=\floor{\frac{N-1}{t}}.
+\]
+Since $N\le tk$, we have $b\le k-1$.
+We claim $b\ge l+1$.
+Otherwise $b\le l$ implies $N\le t(l+1)$.
+Both $t(l+1)$ and $tk$ would then lie in $A$: they are between $N$
+and $tk\le U$.
+Their difference is $t(d-1)>d-1$, which is impossible in an interval
+of length $d$. Thus $b\in B$.
+
+By construction $tb<N$.
+Condition \Dcond\ supplies a multiple of $b$ in $A$, and its multiplier
+must be at least $t+1$. Hence
+\[
+  (t+1)b\le U=N+d-1.
+\]
+Write $N=tb+v$ with $1\le v\le t$.
+The last inequality yields $b\le d+v-1\le d+t-1$, and therefore
+\begin{equation}\label{eq:layerNupper}
+  N\le t(d+t).
+\end{equation}
+Combining~\eqref{eq:layerNlower} and~\eqref{eq:layerNupper}, and using
+$d=k-l$, gives
+\[
+  tk-(k-l)+1\le t(k-l+t),
+  \qquad
+  k\ge(t+1)l-t^2+1=(t+1)(l-t+1).
+\]
+This proves~\eqref{eq:layerk}.
+Adding $k-1$ to~\eqref{eq:layerNlower} and~\eqref{eq:layerNupper}
+gives the corresponding lower and upper bounds for $n$.
+The further bound $n\le(t+1)k-1$ is part of the definition of $t$.
+Together these are~\eqref{eq:layern}.
+\end{proof}
+
+\section{The two boundary families}\label{sec:boundary}
+
+The relevant boundary parameters have $t=2$ and $k$ equal to
+$3l-3$ or $3l-2$. We first determine $n$, and then give explicit
+injections for all subsets having no generator at most $d$.
+
+\begin{lemma}\label{lem:boundaryparameters}
+Assume the hypotheses of Theorem~\ref{thm:hitting}, with $l\ge3$ and
+$t=2$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item If $k=3l-3$, then $n=7l-6$.
+\item If $k=3l-2$, then $n=7l-3$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For $t=2$, equation~\eqref{eq:layern} gives
+\[
+  2k+l\le n\le3k-2l+3.
+\]
+For $k=3l-3$, the two bounds are both $7l-6$.
+For $k=3l-2$, they give $n\in\{7l-4,7l-3\}$.
+The first choice violates \Dcond.
+Indeed, $b=2l-1$ belongs to $B$, whereas for $n=7l-4$ one has
+\[
+  A=\interval{4l-1}{6l-4},\qquad
+  2b=4l-2<\min A,\qquad 3b=6l-3>\max A.
+\]
+Since two consecutive multiples of $b$ straddle the whole interval,
+$A$ contains no multiple of $b$.
+Thus only $n=7l-3$ is possible.
+\end{proof}
+
+\begin{lemma}[Boundary injections]\label{lem:boundaryinjections}
+Let $l\ge3$.
+For either of the two parameter families
+\[
+  (k,n)=(3l-3,7l-6)
+  \quad\text{or}\quad
+  (k,n)=(3l-2,7l-3),
+\]
+every nonempty $I\subseteq\interval{d+1}{k}$ satisfies
+$|A\cap\sg{I}|\ge|I|$.
+This assertion does not require \Dcond.
+\end{lemma}
+
+\begin{proof}
+\textbf{The family $k=3l-3$.}
+Set $g=l-1\ge2$.
+The parameters become
+\[
+  k=3g,\qquad d=2g-1,\qquad
+  A=\interval{4g+2}{6g},\qquad
+  I\subseteq\interval{2g}{3g}.
+\]
+If $3g\in I$, the map
+\begin{equation}\label{eq:boundaryonea}
+  c\longmapsto c+3g\qquad(c\in I)
+\end{equation}
+is injective and has representable values in
+$\interval{5g}{6g}\subseteq A$.
+The inclusion uses $g\ge2$.
+If $3g\notin I$, use
+\begin{equation}\label{eq:boundaryoneb}
+  c\longmapsto
+  \begin{cases}
+    6g,&c=2g,\\
+    2c,&c>2g.
+  \end{cases}
+\end{equation}
+The exceptional value is $3(2g)$.
+Every other value is an even integer between $4g+2$ and $6g-2$.
+They are mutually distinct and avoid $6g$.
+Thus~\eqref{eq:boundaryoneb} is also an injection into $A\cap\sg{I}$.
+
+\textbf{The family $k=3l-2$.}
+Here
+\[
+  d=2l-2,\qquad
+  A=\interval{4l}{6l-3},\qquad
+  I\subseteq\interval{2l-1}{3l-2}.
+\]
+The map
+\begin{equation}\label{eq:boundarytwo}
+  c\longmapsto
+  \begin{cases}
+    3c=6l-3,&c=2l-1,\\
+    2c,&c\ge2l
+  \end{cases}
+\end{equation}
+has representable values in $A$.
+Its exceptional value is odd, whereas the other values are distinct
+even integers in $\interval{4l}{6l-4}$.
+This proves injectivity and completes both families.
+\end{proof}
+
+\section{Completion of the proof}\label{sec:completion}
+
+\begin{proof}[Proof of Theorem~\ref{thm:hitting}]
+If $d=1$, then $B=\{k\}$ and $A=\{n-k+1\}$.
+Condition \Dcond\ with $s=k$ gives $k\mid n-k+1$, so
+$A\subseteq\sg{k}$ and \Hcond\ follows.
+The corresponding quotient is the finite geometric sum
+\[
+  \frac{1-q^{n-k+1}}{1-q^k}
+  =\sum_{j=0}^{(n-k+1)/k-1}q^{jk}.
+\]
+
+Suppose $d\ge2$, and put $t=\floor{n/k}\ge2$.
+If $l\le3(t-1)$, Lemma~\ref{lem:small} proves \Hcond\ for every
+nonempty subset of $B$.
+If $k\ge3l-1$, Corollary~\ref{cor:tailrange} gives the same conclusion.
+It remains to suppose that both inequalities fail:
+\begin{equation}\label{eq:remainingrange}
+  l\ge3t-2,\qquad k<3l-1.
+\end{equation}
+Proposition~\ref{prop:layers} gives
+\begin{equation}\label{eq:completiondifference}
+  \begin{split}
+  k-(3l-1)
+  &\ge (t-2)l-t^2+2\\
+  &\ge (t-2)(3t-2)-t^2+2\\
+  &=2(t-1)(t-3).
+  \end{split}
+\end{equation}
+The second inequality uses $t\ge2$.
+If $t\ge3$, the last expression is nonnegative, contradicting
+$k<3l-1$. Hence $t=2$.
+Equation~\eqref{eq:layerk} now says $k\ge3l-3$, so the only
+integer choices are
+\begin{equation}\label{eq:onlyboundaries}
+  k=3l-3\quad\text{or}\quad k=3l-2.
+\end{equation}
+Moreover $l\ge4$ by~\eqref{eq:remainingrange}.
+Lemma~\ref{lem:boundaryparameters} supplies the corresponding values
+of $n$.
+
+Fix any nonempty $I\subseteq B$ in either remaining family.
+If it contains a generator at most $d$, apply Lemma~\ref{lem:mixed}.
+Otherwise apply Lemma~\ref{lem:boundaryinjections}.
+Thus every such $I$ satisfies \Hcond.
+The cases above cover all normalized parameters, proving
+Theorem~\ref{thm:hitting}.
+\end{proof}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.43\textwidth}X@{}}
+\toprule
+\textbf{Parameter range} & \textbf{Argument giving \Hcond\ for all subsets}\\
+\midrule
+$d=1$ & The unique denominator generator divides the numerator exponent\\
+$d\ge2,\ l\le3(t-1)$ & Lemma~\ref{lem:small}\\
+$d\ge2,\ k\ge3l-1$ & Mixed sumsets and the upper-endpoint lemma\\
+Neither preceding inequality, $d\ge2$ &
+$t=2$ and the two boundary families;
+mixed sumsets and explicit injections\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Reduce to $0\le l<k\le n/2$ as in Section~\ref{sec:setup}.
+Polynomiality gives \Dcond\ by~\eqref{eq:polynomialcriterion}.
+Theorem~\ref{thm:hitting} gives \Hcond\ for every nonempty
+$I\subseteq B$.
+Applying Theorem~\ref{thm:GLY} to~\eqref{eq:cancel} yields
+$P_{n,k,l}(q)\in\Nzero[q]$.
+The equal-index cases have quotient $1$, and the other ordering
+cannot give a polynomial. This proves the full statement.
+\end{proof}
+
+\begin{corollary}[A Hilbert-series realization]\label{cor:hilbert}
+Every polynomial quotient in the normalized range of
+Theorem~\ref{thm:main} is the Hilbert series of a finite-dimensional
+graded complete intersection
+\[
+  \C[x_{l+1},\ldots,x_k]/(f_N,\ldots,f_U),
+  \qquad \deg x_b=b,\quad \deg f_a=a.
+\]
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:hitting} verifies the hypothesis of the
+regular-sequence assertion in Theorem~\ref{thm:GLY}.
+\end{proof}
+
+\section*{Appendix. AI use and supplementary verification}
+\addcontentsline{toc}{section}{Appendix. AI use and supplementary verification}
+
+\textbf{Author and AI use.}
+Justin Du supplied the candidate proof and verification materials and
+directed the preparation of this preprint.
+The manuscript was prepared in an AI-assisted workflow.
+OpenAI Codex was used to review the supplied argument, expand its
+mathematical exposition, check references, rerun the verification programs,
+and prepare the \LaTeX\ source and PDF.
+The author is responsible for the preprint and is the contact for
+questions and corrections.
+
+\textbf{Review status.}
+The argument has undergone internal AI-assisted mathematical review
+and exact-arithmetic checks. External human peer review and
+proof-assistant formalization are not supplied with this version.
+The word \emph{candidate} records that review status.
+All parameter branches are addressed in the text, relative to the two
+external inputs explicitly identified in Section~\ref{sec:tools}.
+This version makes no claim of bibliographic priority.
+
+\textbf{Role of the computations.}
+The proof of Theorems~\ref{thm:hitting} and~\ref{thm:main} is the
+symbolic argument in Sections~\ref{sec:setup}--\ref{sec:completion}.
+No computational cutoff or random sample is used as a premise.
+The supplied programs test the constructions, capacity inequalities,
+and exact coefficient identities on finite sets of inputs.
+Algorithmic cross-checks are distinct from external mathematical review.
+
+\textbf{Main audit.}
+The program \code{verify\_mixed\_completion.py} scans every triple
+$(k,l,n)$ with
+\[
+  2\le k\le16,\qquad 1\le l<k,\qquad 2k\le n\le7k.
+\]
+It tests \Dcond\ and, for each polynomial instance, checks every
+nonempty subset of $B$.
+The randomized stage accepts $6{,}000$ polynomial parameter draws
+with $15\le k\le600$ and tests selected subsets, including subsets
+with few low generators and subsets confined to the upper endpoint.
+These draws need not be distinct.
+The two boundary injections are also checked for $3\le l\le300$
+without imposing polynomiality.
+The coefficient checks multiply each selected full quotient back by
+the denominator and compare with the complete numerator polynomial,
+without truncating the product identity.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}Xr@{}}
+\toprule
+\textbf{Main audit item} & \textbf{Exact count}\\
+\midrule
+Parameter triples in the exhaustive scan & $6{,}920$\\
+Polynomial triples in that scan & $971$\\
+Random accepted polynomial draws & $6{,}000$\\
+Subset checks, including selected random subsets & $3{,}745{,}276$\\
+Mixed-sumset checks & $3{,}726{,}163$\\
+Mixed checks with a nontrivial stabilizer & $2{,}399{,}416$\\
+Mixed checks with collisions under reduction modulo $m$ & $517{,}086$\\
+Comparisons of two semigroup algorithms & $1{,}494$\\
+Boundary-injection checks without polynomiality & $4{,}768$\\
+Complete polynomial identities & $58$\\
+Quotient coefficients in those identities & $82{,}340$\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The main semigroup oracle uses a bitset and successive doubling of the
+available number of each generator.
+A second implementation computes membership by the recurrence
+$u_0=1$ and
+$u_y=\max_{b\in I,\ b\le y}u_{y-b}$, taking the maximum of an empty
+set to be $0$. The $1{,}494$ comparisons between these implementations
+all agree.
+For a constructed certificate, the program checks that its points
+actually belong to the independently computed semigroup.
+For subsets of cardinality at most three in the small-index routine,
+the code tests the conclusion by the oracle; the paper proof of those
+cases is Lemma~\ref{lem:three}.
+
+\textbf{Local mixed-sumset audit.}
+The program \code{audit\_local\_mixed.py} does not impose full
+polynomiality. It generates $12{,}000$ inputs with $k\le2{,}500$,
+finds the actual stabilizer modulus $g$ of the mixed sumset, and tests
+only the local hypothesis $C_A(g)\ge C_B(g)$ used in
+Remark~\ref{rem:mixedlocal}.
+Exactly $9{,}840$ generated inputs satisfy this hypothesis and all pass.
+The other $2{,}160$ are recorded as not meeting the hypothesis.
+Of the passing inputs, $176$ have a nontrivial stabilizer and
+$9{,}664$ have a trivial stabilizer.
+An additional semigroup-oracle check is performed on $246$ of them.
+
+\newpage
+\textbf{Reproducibility.}
+The original supplementary archive and its scripts are preserved in
+the source package. The following commands require Python~3.10 or
+newer and its standard library:
+\begin{quote}
+\small\ttfamily
+python verify\_mixed\_completion.py --k-max 16\\
+\hspace*{1em}--random-cases 6000 --seed 202611103\\
+\hspace*{1em}--out audit\_main\_rerun.json
+
+python audit\_local\_mixed.py --cases 12000\\
+\hspace*{1em}--seed 202611102 --out audit\_local\_rerun.json
+\end{quote}
+Each displayed command is entered as one line.
+Both commands were rerun while preparing this version.
+Their output agrees with the supplied audit files in every field
+except elapsed time.
+All nine hashes in the supplied \code{SHA256.json} were verified;
+the standalone proof draft and the draft inside the original archive
+are byte-for-byte identical.
+The supplement also records a counterexample to an unrestricted
+double-sumset shortcut; that rejected assertion is not used in this paper.
+
+\begin{thebibliography}{9}
+\bibitem{GK}
+Mona Gatzweiler and Christian Krattenthaler.
+\emph{A positivity conjecture for a quotient of $q$-binomial coefficients}.
+The Ramanujan Journal \textbf{69} (2026), article~13, 13~pp.
+DOI: \href{https://doi.org/10.1007/s11139-025-01285-2}
+{10.1007/s11139-025-01285-2}.
+Preprint: \url{https://arxiv.org/abs/2502.06032}.
+
+\bibitem{GLY}
+Mona Gatzweiler, Fabi\'an Levic\'an-Santib\'a\~nez, and Atsuro Yoshida.
+\emph{Cyclotomic generating functions, empty weighted complete
+intersections and positivity}.
+Preprint, arXiv:2603.22226v1 (2026).
+\url{https://arxiv.org/abs/2603.22226v1}.
+
+\bibitem{DeVos}
+Matt DeVos.
+\emph{A short proof of Kneser's addition theorem for abelian groups}.
+Preprint, arXiv:1303.3539v1 (2013).
+\url{https://arxiv.org/abs/1303.3539v1}.
+\end{thebibliography}
+
+\end{document}

@@ -64,6 +64,11 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-
 .download-links { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; padding: 26px 0 32px; border-bottom: 1px solid var(--line); }
 .paper-note { padding-top: 27px; }
 .paper-note p, .citation-section p { font-size: 14px; color: var(--muted); line-height: 1.8; margin: 0; }
+.release-record p + p { margin-top: 10px; }
+.checksum-list { margin: 14px 0; }
+.checksum-list dt { font-size: 11px; font-weight: 650; color: var(--muted); letter-spacing: .8px; }
+.checksum-list dd { margin: 4px 0 0; }
+.checksum-list code { font-size: 12px; overflow-wrap: anywhere; }
 .citation-section { padding-top: 26px; }
 .citation-section .citation-text { color: var(--ink); }
 .citation-section .version-note { margin-top: 15px; font-size: 12px; }
