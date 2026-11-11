@@ -1,0 +1,84 @@
+GATZWEILER-KRATTENTHALER PREPRINT: VERSION 2 REVIEW
+Justin Du | 11 November 2026
+
+Status: internal AI-assisted review, supplemented by exact arithmetic checks.
+This document is not external human peer review or proof-assistant formalization.
+
+CHANGES
+
+1. Lemma 5.1 now derives g not dividing c, and hence g > 1, from the
+   statement that a and b are the only two multiples of g in B.
+   The overall gcd normalization is unnecessary and has been removed.
+2. The same lemma explicitly establishes
+      2 <= |B intersect gZ| <= |A intersect gZ|
+   before passing to the remaining two-multiple case.
+3. The upper-endpoint lemma states why k >= 3l-1 implies d >= k/2 and
+   expands the ceiling/floor inequality using Euclidean remainders.
+4. Sumset lifts now use zeta, reserving z for a number of occupied cosets.
+   The iterated-sumset estimate explicitly records t >= 2 and z >= 1.
+5. PDF reproduction commands preserve literal ASCII double hyphens.
+6. release_checks.json no longer lists external layout-reference inputs.
+   Every distributed path/hash entry now refers to a file actually inside
+   this archive. validate_package.py verifies this property mechanically.
+
+SECTION-BY-SECTION REVIEW
+
+Section 1: Gaussian-binomial symmetry and the strict increase of j(n-j)
+on the reduced integer indices justify the normalization. Cyclotomic
+multiplicities give precisely the stated divisibility condition.
+
+Section 2: The set version of the regular-sequence criterion agrees with
+Propositions 3.3 and 3.6 of the cited paper. The iterated Kneser inequality
+is valid after quotienting by the final stabilizer: all intermediate
+stabilizers in that quotient are trivial. The two-generator threshold
+uses strict inequality and an explicit residue representative.
+
+Section 3: The selected low generator belongs to I and does not exceed d.
+The lift uses N > max(I), so no negative coefficient of that generator is
+needed. Coset capacities count original generators rather than distinct
+residues. The zero coset is counted once using the divisibility hypothesis.
+The nonnegative difference in (3.9) handles all stabilizers.
+
+Section 4: A collision pair's gcd is not assumed to divide the other
+generators. Each occupied class uses its own translate c + <a,b>.
+The exact capacity is the minimum of two tails with the same right end;
+the max with zero handles an empty tail. Both component bounds are valid.
+
+Section 5: The two-multiple case derives its conclusions from the actual
+count in B. No overall coprimality assumption is needed. The four v-cases
+and the neighboring-witness argument retain their stated interval bounds.
+The new audit checks actual constructed witnesses, including nonprimitive
+triples, against an independently computed semigroup.
+
+Section 6: Reduction of A modulo m is used injectively only when d < m.
+The zero-coset lower bound comes from the divisibility condition.
+The v=1 branch uses r >= 4 and l <= 3(t-1); both hypotheses are available.
+
+Section 7: Divisibility for k forces the unique possible multiple tk.
+The proof that b lies in B uses d >= 2 and the interval's span d-1.
+The resulting lower and upper bounds on N yield the claimed layer bounds.
+
+Section 8: The boundary parameter restrictions and the excluded value of n
+follow from the layer bounds and the missing multiple of 2l-1.
+Both explicit maps have representable, distinct images inside A.
+
+Section 9: d=1 is covered separately. For d>=2 the two general ranges and
+the t=2 boundaries exhaust the parameters, including the l=0 cases.
+The semigroup criterion is applied only after all subsets are covered.
+
+RESULT
+
+No additional substantive mathematical gap was identified in this review.
+The conclusions are limited to this internal review and the exact finite
+audits. The manuscript remains a candidate proof.
+
+AUDITS AND INTEGRITY
+
+The original main and local audits are rerun with their documented seeds.
+Their scopes and results are included in verification/rerun/.
+The new three-generator audit and its exact branch counts are included in
+verification/review_v2/. Package-wide checks, bibliography/label checks,
+font embedding, PDF layout checks, and actual payload hashes are recorded
+in release_checks.json and SHA256SUMS.txt.
+
+Run python validate_package.py from an extracted copy of the source package.

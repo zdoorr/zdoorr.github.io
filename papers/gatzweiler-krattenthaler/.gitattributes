@@ -1,3 +1,4 @@
 # Preserve the exact released bytes, including the TeX file's line endings.
 Justin_Du_Gatzweiler_Krattenthaler_preprint_v1* -text
 *.tex whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+Justin_Du_Gatzweiler_Krattenthaler_preprint_v2* -text

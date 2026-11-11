@@ -26,3 +26,5 @@ The site supports search-engine crawling and scholarly metadata; indexing is con
 ## Versioned preprint archives
 
 The Gatzweiler-Krattenthaler preprint, version 1, is archived in the immutable GitHub release [gatzweiler-krattenthaler-v1](https://github.com/zdoorr/zdoorr.github.io/releases/tag/gatzweiler-krattenthaler-v1). Its PDF, TeX source, source-and-verification ZIP, and checksum file are attached to the release. GitHub locks the release assets and associated tag; later manuscript revisions should receive new version identifiers.
+
+Version 2 is the current Gatzweiler-Krattenthaler manuscript, archived in the immutable release [gatzweiler-krattenthaler-v2](https://github.com/zdoorr/zdoorr.github.io/releases/tag/gatzweiler-krattenthaler-v2). It includes the clarified Lemma 5.1 proof, a renewed review record, and a self-contained package manifest. The original version-1 release and files are retained.
