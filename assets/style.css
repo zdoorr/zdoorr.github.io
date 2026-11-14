@@ -102,3 +102,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-
   .paper-main { padding-top: 0; }
   a { color: black; }
 }
+
+/* Proposed-conjecture collection; shared paper styling remains unchanged. */
+.collection-note { max-width: 740px; margin: 18px 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.conjectures-section .section-heading { flex-wrap: wrap; gap: 8px 20px; }
+.download-links .button .file-detail { color: inherit; opacity: .85; }

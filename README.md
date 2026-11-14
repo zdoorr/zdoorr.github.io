@@ -28,3 +28,7 @@ The site supports search-engine crawling and scholarly metadata; indexing is con
 The Gatzweiler-Krattenthaler preprint, version 1, is archived in the immutable GitHub release [gatzweiler-krattenthaler-v1](https://github.com/zdoorr/zdoorr.github.io/releases/tag/gatzweiler-krattenthaler-v1). Its PDF, TeX source, source-and-verification ZIP, and checksum file are attached to the release. GitHub locks the release assets and associated tag; later manuscript revisions should receive new version identifiers.
 
 Version 2 is the current Gatzweiler-Krattenthaler manuscript, archived in the immutable release [gatzweiler-krattenthaler-v2](https://github.com/zdoorr/zdoorr.github.io/releases/tag/gatzweiler-krattenthaler-v2). It includes the clarified Lemma 5.1 proof, a renewed review record, and a self-contained package manifest. The original version-1 release and files are retained.
+
+## Proposed conjectures
+
+The five English version-2 notes are grouped after the two main papers on the homepage. `papers/conjectures/` contains the collection page, five individual abstract pages and PDFs, BibTeX entries, checksums, and a shared English-source-and-verification supplement. The general statements remain open; the maximum-ambiguity note is an open extremal problem. First public posting: 14 November 2026.

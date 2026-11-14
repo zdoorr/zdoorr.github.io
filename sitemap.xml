@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://zdoorr.github.io/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://zdoorr.github.io/</loc><lastmod>2026-11-14</lastmod></url>
   <url><loc>https://zdoorr.github.io/papers/gatzweiler-krattenthaler/</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://zdoorr.github.io/papers/han-xiong/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://zdoorr.github.io/papers/conjectures/</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://zdoorr.github.io/papers/conjectures/primorial-gap-variance/</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://zdoorr.github.io/papers/conjectures/square-sum-vertex-deletion/</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://zdoorr.github.io/papers/conjectures/maximum-difference-record-ambiguity/</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://zdoorr.github.io/papers/conjectures/dyadic-unique-maximum/</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://zdoorr.github.io/papers/conjectures/path-minimum-variance/</loc><lastmod>2026-11-14</lastmod></url>
 </urlset>
